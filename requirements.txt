@@ -1,0 +1,10 @@
+Django
+djangorestframework
+psycopg2
+django-filter
+django-cors-headers
+python-decouple
+gunicorn
+whitenoise
+boto3
+drf-yasg
