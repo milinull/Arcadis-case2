@@ -33,7 +33,7 @@ class AnaliseProcessViewSet(viewsets.ModelViewSet):
         excel_file = gerar_relatorio_excel(dados)
 
         # Retorna o arquivo para o navegador
-        filename = "Relatorio_Analise_Pivot.xlsx"
+        filename = "Relatorio_Analise.xlsx"
         response = HttpResponse(
             excel_file,
             content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
