@@ -14,7 +14,7 @@ var routes = [
     name: "Case 1",
     icon: "ni ni-spaceship text-blue",
     component: <Case1 />,
-    layout: "/case1",
+    layout: "/case2",
   },
 ];
 export default routes;

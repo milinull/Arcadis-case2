@@ -32,7 +32,7 @@ const Case2 = (props) => {
         {...props}
         routes={routes}
         logo={{
-          innerLink: "/page/index",
+          innerLink: "/case2/index",
           imgSrc: require("../assets/img/brand/Arcadis-Color-Case-Study.png"),
           imgAlt: "...",
         }}
@@ -40,7 +40,7 @@ const Case2 = (props) => {
       <div className="main-content" ref={mainContent}>
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/page/index" replace />} />
+          <Route path="*" element={<Navigate to="/case2/index" replace />} />
         </Routes>
         <Container fluid></Container>
       </div>

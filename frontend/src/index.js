@@ -13,8 +13,8 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/page/*" element={<Case2Layout />} />
-      <Route path="*" element={<Navigate to="/page/index" replace />} />
+      <Route path="/case2/*" element={<Case2Layout />} />
+      <Route path="*" element={<Navigate to="/case2/index" replace />} />
     </Routes>
   </BrowserRouter>,
 );
