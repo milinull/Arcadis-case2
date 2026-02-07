@@ -6,15 +6,15 @@ import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/arcadis-case.scss";
 
-import AdminLayout from "layouts/Admin.js";
+import Case2Layout from "layouts/Case2.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/admin/*" element={<AdminLayout />} />
-      <Route path="*" element={<Navigate to="/admin/index" replace />} />
+      <Route path="/page/*" element={<Case2Layout />} />
+      <Route path="*" element={<Navigate to="/page/index" replace />} />
     </Routes>
   </BrowserRouter>,
 );
