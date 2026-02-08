@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
+    "case3",
     "case2",
     "rest_framework",
     "drf_yasg",
@@ -89,7 +90,7 @@ DATABASES = {
         "PASSWORD": config("POSTGRES_PASSWORD"),
         "HOST": config("DB_HOST"),
         "PORT": config("DB_PORT"),
-        "OPTIONS": {"options": "-c search_path=case2,public"},
+        "OPTIONS": {"options": "-c search_path=case2,case3,public"},
     }
 }
 

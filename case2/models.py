@@ -46,5 +46,5 @@ class AnaliseProcess(models.Model):
     aplicar_laranja = models.BooleanField()
 
     class Meta:
-        db_table = "vw_analise_processada"
+        db_table = 'case2"."vw_analise_processada'
         managed = False
