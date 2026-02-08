@@ -4,7 +4,7 @@ import numpy as np
 df = pd.read_excel("../data/Material_Case_Ex3.xlsx", sheet_name="EZMtp")
 df2 = pd.read_excel("../data/Material_Case_Ex3.xlsx", sheet_name="Cadastro")
 
-# Limpeza de colunas e cabeçalho
+# Limpeza de colunas/linhas e cabeçalho
 df = df.drop(columns=df.columns[:3])
 df = df.drop(index=[1, 2])
 df.columns = df.iloc[0]
@@ -24,7 +24,7 @@ df["measurement_date"] = pd.to_datetime(df["measurement_date"]) + pd.to_timedelt
 )
 df = df.drop(columns=df.columns[2])
 
-# Restruturar dados
+# Reestruturar dados
 df = df.melt(
     id_vars=[
         "#sys_loc_code",
@@ -68,18 +68,16 @@ df = df.sort_values(by=["#sys_loc_code", "param_value"])
 # Correção de nome linhas Cond
 is_num = pd.to_numeric(df["param_value"], errors="coerce").notna()
 cond = df["param_code"] == "Cond"
-df.loc[cond, "param_code"] = np.where(
-    is_num[cond], "Cond elet", "Cond clim"
-)
+df.loc[cond, "param_code"] = np.where(is_num[cond], "Cond elet", "Cond clim")
 
-# Limpeza de colunas e cabeçalho
+# Limpeza de colunas/linhas e cabeçalho
 df2 = df2.drop(columns=df2.columns[:2])
 df2 = df2.drop(index=[0, 1, 3, 4, 5])
 
 # Renomear
 df2 = df2.rename(
     columns={
-        'Unnamed: 2': "task_code",
+        "Unnamed: 2": "task_code",
     }
 )
 
