@@ -54,7 +54,7 @@ const UploadRiskComponent = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/upload-risk/",
+        "http://35.175.150.159:8000/api/upload-risk/",
         formData,
         {
           responseType: "blob",
