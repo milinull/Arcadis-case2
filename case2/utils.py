@@ -49,7 +49,7 @@ def processar_dataframe(file_obj):
     df["MENOR VALOR FINAL"] = np.where(
         df["_temp_min_linha"].notna(), 
         df["MENOR VALOR FINAL"], 
-        np.nan
+        df["MENOR VALOR FINAL"] 
     )
 
     df["Concentração de solubilidade"] = 500
@@ -96,9 +96,25 @@ def gerar_relatorio_excel(df):
     padrao = wb.add_format({**estilo_base, "border": 1, "border_color": "#E8E8E8"})
     numero = wb.add_format({**estilo_base, "border": 1, "border_color": "#E8E8E8", "num_format": "0.00E+00"})
     
-    # Cores condicionais
-    estilo_vor_laranja = wb.add_format({**estilo_base, "bg_color": "#FFC299", "bold": True, "border": 1, "num_format": "0.00"})
-    estilo_cinza = wb.add_format({**estilo_base, "bg_color": "#D3D3D3", "bold": True, "border": 1, "num_format": "0.00E+00"})
+    # Fundo Cinza
+    estilo_cinza = wb.add_format({
+        **estilo_base, 
+        "bg_color": "#D3D3D3", 
+        "bold": True, 
+        "border": 1, 
+        "border_color": "#E8E8E8",
+        "num_format": "0.00E+00"
+    })
+    
+    # Fonte Laranja
+    estilo_coluna_vor_laranja = wb.add_format({
+        **estilo_base, 
+        "font_color": "#FF6600", 
+        "bold": True, 
+        "border": 1, 
+        "border_color": "#E8E8E8",
+        "num_format": "0.00"
+    })
 
     # Cabeçalho
     ws.merge_range("G1:J2", "MÁXIMAS ACEITÁVEIS PARA ÁGUA\nNO PONTO DE EXPOSIÇÃO", estilo_topo)
@@ -134,9 +150,9 @@ def gerar_relatorio_excel(df):
             ws.write(linha, 1, nome, padrao)
             ws.write(linha, 2, fonte_vor, padrao)
 
-        # Valor VOR com formatação laranja se aplicável
+        # Valor VOR com formatação laranja
         tem_alerta_laranja = grupo["Laranja"].any() if "Laranja" in grupo.columns else False
-        estilo_atual_vor = estilo_vor_laranja if tem_alerta_laranja else padrao
+        estilo_atual_vor = estilo_coluna_vor_laranja if tem_alerta_laranja else padrao
         
         try:
             val_vor_num = float(valor_vor)
@@ -155,6 +171,30 @@ def gerar_relatorio_excel(df):
         else:
             ws.write(linha, 4, solubilidade, padrao)
 
+        # Mescla Colunas Valor Considerado
+        val_final = grupo.iloc[0]["MENOR VALOR FINAL"]
+        if val_final == "-":
+             validos = grupo[grupo["MENOR VALOR FINAL"] != "-"]["MENOR VALOR FINAL"]
+             if not validos.empty:
+                 val_final = validos.iloc[0]
+        
+        eh_cinza = grupo.iloc[0]["Cinza"] == True
+        
+        if eh_cinza:
+            estilo_final = estilo_cinza
+        else:
+            estilo_final = numero
+
+        if n_linhas > 1:
+            ws.merge_range(linha, 7, linha_fim, 7, val_final, estilo_final)
+        else:
+            ws.write(linha, 7, val_final, estilo_final)
+
+        if n_linhas > 1:
+            ws.merge_range(linha, 9, linha_fim, 9, val_final, estilo_final)
+        else:
+            ws.write(linha, 9, val_final, estilo_final)
+
         # Linhas de detalhe
         for idx, row in grupo.iterrows():
             l_atual = linha + list(grupo.index).index(idx)
@@ -166,26 +206,9 @@ def gerar_relatorio_excel(df):
             val_aberto = row["AMBIENTES ABERTOS"]
             ws.write(l_atual, 6, val_aberto if val_aberto != "-" else "-", numero if val_aberto != "-" else padrao)
 
-            # Coluna H: Valor Considerado
-            val_final = row["MENOR VALOR FINAL"]
-            eh_cinza = row["Cinza"] == True
-            
-            estilo_final = estilo_cinza if eh_cinza else numero
-            
-            if val_aberto != "-":
-                 ws.write(l_atual, 7, val_final, estilo_final)
-            else:
-                 ws.write(l_atual, 7, "-", padrao)
-
             # Coluna I: Ambiente Fechado
             val_fechado = row["AMBIENTES FECHADOS"]
             ws.write(l_atual, 8, val_fechado if val_fechado != "-" else "-", numero if val_fechado != "-" else padrao)
-
-            # Coluna J: Valor Considerado
-            if val_fechado != "-":
-                 ws.write(l_atual, 9, val_final, estilo_final)
-            else:
-                 ws.write(l_atual, 9, "-", padrao)
 
         linha += n_linhas
 

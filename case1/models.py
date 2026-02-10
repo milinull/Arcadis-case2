@@ -14,4 +14,4 @@ class ResultadosAmostras(models.Model):
     limite_quant = models.IntegerField()
 
     class Meta:
-        db_table = 'case1.resultados_amostras'
+        db_table = 'resultados_amostras'

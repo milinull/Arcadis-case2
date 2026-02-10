@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+import io
+import xlsxwriter
+
 
 def processar_dataframe(file_obj):
     df = pd.read_excel(file_obj, sheet_name="EZMtp")
@@ -88,3 +91,33 @@ def processar_dataframe(file_obj):
     df["task_code"] = df2["task_code"].iloc[0]
 
     return df
+
+
+def gerar_excel_formatado(df):
+    """Gera o Excel formatado baseado no DataFrame processado"""
+    output = io.BytesIO()
+
+    # Criação arquivo Excel
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Dados Processados')
+
+        workbook = writer.book
+        worksheet = writer.sheets['Dados Processados']
+
+        # Formato padrão
+        formato_padrao = workbook.add_format({
+            'border': 1,
+            'align': 'center',
+            'valign': 'vcenter'
+        })
+
+        # Ajuste de largura das colunas
+        for i, col in enumerate(df.columns):
+            max_len = max(
+                df[col].astype(str).map(len).max(),
+                len(str(col))
+            ) + 2
+            worksheet.set_column(i, i, max_len)
+
+    output.seek(0)
+    return output

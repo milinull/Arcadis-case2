@@ -9,7 +9,7 @@ class AvaliacaoRisco(models.Model):
     efeito = models.CharField(max_length=2, null=True, blank=True)
     ambientes_abertos = models.FloatField(null=True, blank=True)
     ambientes_fechados = models.FloatField(null=True, blank=True)
-    vor = models.CharField(max_length=150, null=True, blank=True)
+    vor_nome = models.CharField(max_length=150, null=True, blank=True)
     valor_vor = models.FloatField(null=True, blank=True)
     solubilidade = models.IntegerField(default=500)
     menor_valor_final = models.FloatField(null=True, blank=True)
@@ -17,4 +17,4 @@ class AvaliacaoRisco(models.Model):
     is_laranja = models.BooleanField(default=False)
 
     class Meta:
-        db_table = 'case2.avaliacao_risco'
+        db_table = 'avaliacao_risco'

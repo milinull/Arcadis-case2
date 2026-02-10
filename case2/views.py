@@ -47,7 +47,7 @@ class UploadRiskView(views.APIView):
                     efeito=row.get("EFEITO"),
                     ambientes_abertos=row.get("AMBIENTES ABERTOS"),
                     ambientes_fechados=row.get("AMBIENTES FECHADOS"),
-                    vor=row.get("VOR"),
+                    vor_nome=row.get("VOR"),
                     valor_vor=row.get("Valor VOR (mg/l)"),
                     solubilidade=500,
                     menor_valor_final=row.get("MENOR VALOR FINAL"),

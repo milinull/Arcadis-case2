@@ -15,4 +15,4 @@ class DadosColetados(models.Model):
     task_code = models.CharField(max_length=250)
 
     class Meta:
-        db_table = 'case3"."dados_coletados'
+        db_table = 'dados_coletados'

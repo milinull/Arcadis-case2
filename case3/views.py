@@ -6,9 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from django.http import HttpResponse
-from .utils import processar_dataframe
+from .utils import processar_dataframe, gerar_excel_formatado
 import pandas as pd
-import io
+
 
 class DadosColetadosViewSet(viewsets.ModelViewSet):
     # Ordena pelo mais recente
@@ -36,7 +36,7 @@ class UploadExcelView(APIView):
                 obj = DadosColetados(
                     sys_loc_code=str(row['sys_loc_code']) if pd.notna(row['sys_loc_code']) else "",
                     param_code=str(row['param_code']) if pd.notna(row['param_code']) else "",
-                    param_value=row['param_value'] if pd.notna(row['param_value']) else "",
+                    param_value=row['param_value'] if pd.notna(row['param_value']) else None,
                     param_unit=str(row['param_unit']) if pd.notna(row['param_unit']) else "",
                     measurement_method=str(row['measurement_method']) if pd.notna(row['measurement_method']) else "",
                     measurement_date=row['measurement_date'],
@@ -49,14 +49,10 @@ class UploadExcelView(APIView):
             DadosColetados.objects.bulk_create(objetos_para_criar)
 
             # Gera o Excel de retorno
-            output = io.BytesIO()
-            with pd.ExcelWriter(output, engine='openpyxl') as writer:
-                df_limpo.to_excel(writer, index=False, sheet_name='Dados Processados')
-            
-            output.seek(0)
+            excel_file = gerar_excel_formatado(df_limpo)
 
             response = HttpResponse(
-                output.getvalue(),
+                excel_file.getvalue(),
                 content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )
             response['Content-Disposition'] = 'attachment; filename="dados_processados.xlsx"'
