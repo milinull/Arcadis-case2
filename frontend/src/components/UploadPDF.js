@@ -54,7 +54,7 @@ const UploadPDFComponent = () => {
 
     try {
       const response = await axios.post(
-        "http://35.175.150.159:8000/api/upload-pdf/",
+        "http://35.175.150.159:8000/api/case1/upload-pdf/",
         formData,
         {
           responseType: "blob",
