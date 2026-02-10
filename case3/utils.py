@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import io
-import xlsxwriter
 
 
 def processar_dataframe(file_obj):
@@ -101,15 +100,7 @@ def gerar_excel_formatado(df):
     with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
         df.to_excel(writer, index=False, sheet_name='Dados Processados')
 
-        workbook = writer.book
         worksheet = writer.sheets['Dados Processados']
-
-        # Formato padrão
-        formato_padrao = workbook.add_format({
-            'border': 1,
-            'align': 'center',
-            'valign': 'vcenter'
-        })
 
         # Ajuste de largura das colunas
         for i, col in enumerate(df.columns):

@@ -5,7 +5,7 @@ import Case3 from "views/Case3.js";
 var routes = [
   {
     path: "/index",
-    name: "Upload PDF",
+    name: "Report PDF",
     icon: "ni ni-single-copy-04 text-red",
     component: <Case1 />,
     layout: "/case1",
@@ -19,7 +19,7 @@ var routes = [
   },
   {
     path: "/index",
-    name: "Upload Excel",
+    name: "Data Management",
     icon: "ni ni-cloud-upload-96 text-green",
     component: <Case3 />,
     layout: "/case3",

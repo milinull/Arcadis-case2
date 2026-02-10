@@ -1,7 +1,6 @@
 import camelot
 import pandas as pd
 import numpy as np
-import xlsxwriter
 import io
 
 def processar_dataframe(file_obj):

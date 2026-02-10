@@ -84,6 +84,19 @@ const Sidebar = ({ routes, logo }) => {
           </div>
 
           <Nav navbar>{createLinks(routes)}</Nav>
+          <hr className="my-3" />
+          <Nav navbar>
+            <NavItem>
+              <NavLink
+                href="https://github.com/milinull/Arcadis-case"
+                target="_blank"
+                onClick={closeCollapse}
+              >
+                <i className="fab fa-github" style={{ fontSize: "1.1rem" }} />
+                Github
+              </NavLink>
+            </NavItem>
+          </Nav>
         </Collapse>
       </Container>
     </Navbar>
